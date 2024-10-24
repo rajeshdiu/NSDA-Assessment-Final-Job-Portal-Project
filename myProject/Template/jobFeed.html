@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+</style>
+</head>
+<body>
+
+  <br>
+   <!-- Search Bar -->
+   <div class="search-bar mb-4">
+    <div class="input-group">
+
+        <form action=" {% url 'searchJob' %} " method="GET">
+
+            <input type="text" class="form-control" name="query" placeholder="Search for jobs..." id="search-input">
+            <div class="input-group-append">
+                <button class="btn btn-success" id="search-button">Search</button>
+            </div>
+            
+        </form>
+        
+    </div>
+</div>
+
+{% for i in jobs %}
+       
+<h2>Title: {{i.title}}</h2>
+
+<div class="card">
+  <img src="/{{i.Job_Image}}" alt="Avatar" style="width:100%">
+  <div class="container">
+    <h4><b>Vacancy: {{i.openings}}</b></h4> 
+    <p>Skill : {{i.skills}}</p> 
+    <p>Description : {{i.description}}</p> 
+    
+    {% if i.category == 'full_time' %}
+      <h1>Full Time</h1>
+    {% endif %}
+
+    {% if i.category == 'part_time' %}
+    <h1>Part Time</h1>
+    
+  {% endif %}
+
+  
+  {% if request.user.user_type == 'seeker' %}
+    
+<a href=" {% url 'applyJob' i.id %} ">Appy Job</a>
+  {% endif %}
+    
+    
+      
+  </div>
+</div>
+
+{% endfor %}
+ 
+</body>
+</html> 
+
+    
+{% endblock body %}
+    

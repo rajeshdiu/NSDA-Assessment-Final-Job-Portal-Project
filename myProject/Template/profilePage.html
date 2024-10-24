@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style>
+    .profile-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        text-align: center;
+        margin: 20px auto; /* Center the profile container */
+    }
+    
+    .profile-container img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+        border: 3px solid #6a11cb;
+    }
+    
+    h2 {
+        margin: 10px 0;
+        color: #333;
+    }
+    
+    p {
+        margin: 5px 0;
+        color: #555;
+    }
+    
+    .button-container {
+        margin-top: 20px;
+    }
+    
+    .edit-button {
+        padding: 10px 20px;
+        background-color: #6a11cb;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-bottom: 10px;
+    }
+    
+    .edit-button:hover {
+        background-color: #2575fc;
+    }
+    
+    .action-link {
+        display: inline-block;
+        margin: 5px 10px;
+        padding: 10px 15px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    
+    .action-link:hover {
+        background-color: #0056b3;
+    }
+    
+</style>
+<div class="profile-container">
+    <h2>{{ request.user.username }}</h2>
+    <img src="/{{request.user.Profile_Pic }}" alt="Profile Picture">
+
+    
+    
+    {% if request.user.user_type == 'recruiter' %}
+
+    <h1>Recruiter</h1>
+    <a href=" {% url 'createdJob' %} ">Created Job</a>
+    <a href=" {% url 'addJob' %} ">Add Job</a>
+        
+    {% endif %}
+
+    {% if request.user.user_type == 'seeker' %}
+
+    <h1>Seeker</h1>
+        
+    {% endif %}
+        
+
+
+    <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
+    <p><strong>Email:</strong> {{ request.user.email }}</p>
+    <p><strong>Contact Number:</strong> {{ request.user.contact_no }}</p>
+    
+    <a href=" {% url 'editProfile' %} ">Edit Profile</a>
+
+    <div class="button-container">
+
+
+    </div>
+</div>
+{% endblock body %}
